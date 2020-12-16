@@ -133,7 +133,21 @@ export class MoviesController {
     console.log(movieData);
     return "This will create a movie";
   }
+@Get("search")
+search(@Query('year') searchingYear: string) {
+  return `We are searching for a movie made after: ${searchingYear}`
+}
 ```
 
 - @Body() Body 데코레이터를 통해서 body 데이터를 받아올 수 있음
+- @Query('year') 쿼리스트링 데이터 데코레이터 (/search?year=2000 요청 이면 2000 받아옴)
+
 - 또한 json 형식의 Data를 그대로 return해도 json을 이해하고 그대로 출력해줌.
+
+#### nest g s movies : generate로 movies service 생성
+
+- module.ts의 Provider에 자동으로 추가
+
+- /entities/movie.entity.ts에 가짜 Movie DB를 만들고
+- service에서 private movies: Movie[] = []; 로 가져옴
+- service에서 각 비즈니스 로직을 처리하고 결과값을 return해서 controller로 보냄
