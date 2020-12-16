@@ -85,3 +85,55 @@ getHi(): string {
 ```
 
 - 이렇게 사용하는 게 올바른 사용법임.
+
+---
+
+- cmd 창에 nest를 입력하면 nestJS 프레임워크에서 사용할 수 있는 것들이 나옴
+- generate 커맨드로 nestJS의 거의 모든 것을 생성할 수 있음.
+
+#### nest g co : generate로 controller를 생성함 => 후에 이름을 물어보는데 'movies'로 생성
+
+- 생성하면 src/movies 폴더가 생성되고 app.module.ts의 controllers에 MoviesController가 자동 추가되어있음
+
+```JS
+@Controller('movies')
+export class MoviesController {
+
+  @Get()
+  getAll() {
+    return "This will return all movies";
+  }
+}
+```
+
+- movies.controller에 위 get router를 추가해줘도 http://localhost:3000 주소에서 404 에러가 발생함.
+- @Controller('movies') 이 부분이 컨트롤러를 위한 url을 생성하게 되어 (url의 엔트리 포인트를 컨트롤하는 부분)
+- http://localhost:3000/movies 로 들어가야 함.
+
+```JS
+@Get("/:id")
+  getOne(@Param("id") id: string){
+    return `This will return ${id} movies`;
+  }
+```
+
+- localhost:3000/movies/1 => id에 대한 값을 같이 url로 받으면 실행됨.
+- @Get 데코레이터 안에 getOne 함수를 생성하고 인자값으로
+- 파라미터 데코레이터, @Param("id")를 넣어주면 NestJS는 url에 있는 id paramter를 원한다고 요청하는 것임
+
+- url로 넘어온 id부분을 string 형식의 id라는 이름으로 받겠다는 뜻이고 뒤의 id: string은 url에서 넘어온 id값을 id라는 변수로 재사용한다는 것
+
+#### nestJS는 필요한 파라미터를 원할 때 직접 요청해서 사용해야 함.
+
+- @Param("id") 파라미터 데코레이터를 통해서 id를 요청해서 가져와서 사용할 수 있고
+
+```JS
+@Post()
+  create(@Body() movieData) {
+    console.log(movieData);
+    return "This will create a movie";
+  }
+```
+
+- @Body() Body 데코레이터를 통해서 body 데이터를 받아올 수 있음
+- 또한 json 형식의 Data를 그대로 return해도 json을 이해하고 그대로 출력해줌.
