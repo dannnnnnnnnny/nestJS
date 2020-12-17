@@ -151,3 +151,45 @@ search(@Query('year') searchingYear: string) {
 - /entities/movie.entity.ts에 가짜 Movie DB를 만들고
 - service에서 private movies: Movie[] = []; 로 가져옴
 - service에서 각 비즈니스 로직을 처리하고 결과값을 return해서 controller로 보냄
+
+---
+
+- npm i class-validator, class-transformer
+
+```JS
+// main.ts
+// 유효성 검사용 파이프 생성
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,  // 아예 dto의 class-validator에 접근하지 못함 (보안성 증가)
+      forbidNonWhitelisted: true, // 잘못된 값에 대해 알려줌
+      transform: true,
+      // 유저가 보낸 Input 값을 원하는 실제 타입으로 변환해줌 (querystring은 string으로 오기때문에 id를 string으로 타입 지정 후에 parseInt로 int로 형변환해, 사용했는데 number로 타입 지정을 해도 에러가 발생하지 않음)
+    })
+  );
+
+```
+
+- 위 코드를 추가해서 유효성 검사를 해주는 파이프를 생성 후
+- create-movie.dto.ts에서
+
+```JS
+export class CreateMovieDTO {
+
+  @IsString()
+  readonly title: string;
+  @IsNumber()
+  readonly year: number;
+  @IsString({ each: true })
+  readonly genres: string[];
+}
+```
+
+- 각각 데코레이터를 통해 유효성검사를 해주면 맞지 않는 Input값을 보낼 때 검증을 통해 에러를 발생시켜줌
+
+### npm i mapped-types
+
+- 타입을 변환시키고 사용할 수 있게 하는 패키지
+- DTO를 변환시켜줌
+
+- nestJS는 타입스크립트를 통해서 보안 뿐 아니라 유효성 검사를 통해서 서버를 보호함.
