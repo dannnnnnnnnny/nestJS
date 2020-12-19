@@ -1,12 +1,11 @@
 import {
-  Controller, 
-  Body, 
-  Param, 
-  Query, 
-  Get, 
-  Post, 
-  Patch, 
-  Delete 
+  Controller,
+  Body,
+  Param,
+  Get,
+  Post,
+  Patch,
+  Delete,
 } from '@nestjs/common';
 import { CreateMovieDTO } from './dto/create-movie.dto';
 import { UpdateMovieDTO } from './dto/update-movie.dto';
@@ -17,14 +16,13 @@ import { MoviesService } from './movies.service';
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 
-
   @Get()
   getAll(): Movie[] {
     return this.moviesService.getAll();
   }
 
-  @Get(":id")
-  getOne(@Param("id") movieId: number): Movie {
+  @Get(':id')
+  getOne(@Param('id') movieId: number): Movie {
     return this.moviesService.getOne(movieId);
   }
 
@@ -33,13 +31,13 @@ export class MoviesController {
     return this.moviesService.create(movieData);
   }
 
-  @Delete(":id")
-  remove(@Param("id") movieId: number) {
+  @Delete(':id')
+  remove(@Param('id') movieId: number) {
     return this.moviesService.deleteOne(movieId);
   }
 
-  @Patch(":id")
-  patch(@Param("id") movieId: number, @Body() updateData: UpdateMovieDTO) {
+  @Patch(':id')
+  patch(@Param('id') movieId: number, @Body() updateData: UpdateMovieDTO) {
     return this.moviesService.update(movieId, updateData);
   }
 }

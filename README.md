@@ -193,3 +193,17 @@ export class CreateMovieDTO {
 - DTO를 변환시켜줌
 
 - nestJS는 타입스크립트를 통해서 보안 뿐 아니라 유효성 검사를 통해서 서버를 보호함.
+
+---
+
+app.module.ts의 Controllers와 Providers의 MovieController, MovieService를 지운 후
+
+### nest g mo movies
+
+- movies 모듈 생성
+- app.module.ts의 import에 자동으로 업데이트 됨.
+- movies.module.ts의 controllers와 providers에 각각 MovieController, MovieService 추가
+
+- movies.controller.ts에서 req, res도 사용할 수 있음
+- getAll((@Req() req, @Res() res))
+- express위에서 돌아가기 때문에 가능하지만 fastify나 다른 프레임워크를 사용할수도 있기떄문에 req, res는 추천하지 않음.
