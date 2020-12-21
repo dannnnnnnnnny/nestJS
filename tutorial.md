@@ -68,3 +68,17 @@ export class CatsController {
 @Query(key?: string)  // req.query / req.query[key]
 @Headers(name?: string) // req.headers / req.headers[key]
 ```
+
+### Resource
+- 일반적인 Http Request Endpoint 데코레이터를 @Get과 동일하게 제공
+- @Post(), @Put(), @Delete(), @Patch(), @Options(), @Head(), @All()
+
+``` JS
+// cats.controller.ts
+import { Controller, Get, Post } from '@nestjs/common';
+
+@Controller("cats')
+export class CatsController {
+  
+}
+```
